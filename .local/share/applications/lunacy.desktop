@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=11.6
+Name=Lunacy
+GenericName=Lunacy Graphic Editor
+Exec=env AVALONIA_GLOBAL_SCALE_FACTOR=2 /usr/bin/lunacy %U
+Icon=/opt/icons8/lunacy/Assets/LunacyLogo.png
+Type=Application
+Terminal=false
+Categories=Graphics;Editors;
+MimeType=x-scheme-handler/i8-lunacy;
+StartupWMClass=Lunacy
