@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=keybr
+Exec=/opt/helium-browser-beta-bin/helium-wrapper --profile-directory=Default --app-id=pcklphganfmjgkefaemldhkgjhicbied
+Icon=chrome-pcklphganfmjgkefaemldhkgjhicbied-Default
+StartupWMClass=crx_pcklphganfmjgkefaemldhkgjhicbied

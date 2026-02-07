@@ -59,17 +59,17 @@ Use the `mount --bind` command to link a host directory to a directory inside th
 > In this example, we share the host's `/mnt/zram1` directory to Waydroid's `Pictures` folder. Replace `/mnt/zram1` with the path to your desired host folder.
 
 ```bash
-sudo mount --bind /home/red_sora/Shared_waydroid_linux/ ~/.local/share/waydroid/data/media/0/Shared
+sudo mount --bind /mnt/zram1 ~/.local/share/waydroid/data/media/0/Pictures
 ```
 
 #### Maintaining the Share
 
 Bind mounts are not persistent and must be re-established after reboots or session restarts.
 
-| Scenario                     | Action Required                      |
-| :--------------------------- | :----------------------------------- |
+| Scenario | Action Required |
+| :--- | :--- |
 | **Waydroid Session Restart** | Unmount, then re-bind the directory. |
-| **Host System Reboot**       | The mount is gone; simply re-bind.   |
+| **Host System Reboot** | The mount is gone; simply re-bind. |
 
 **Commands for Managing the Mount:**
 

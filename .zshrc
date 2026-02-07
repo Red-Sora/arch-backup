@@ -28,8 +28,8 @@ export TERMINAL='kitty'
 #export BROWSER='firefox'
 
 # Set the default editor (Critical for TTY/SSH/Yazi)
-export EDITOR='code --wait'
-export VISUAL='code --wait'
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # --- Compilation Optimization ---
 # 1. Parallelism: Use ALL available processing units.
@@ -501,8 +501,3 @@ fi
 # =============================================================================
 # End of ~/.zshrc
 # =============================================================================
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/red_sora/.lmstudio/bin"
-# End of LM Studio CLI section
-

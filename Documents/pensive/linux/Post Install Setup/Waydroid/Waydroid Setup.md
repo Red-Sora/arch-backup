@@ -96,11 +96,6 @@ sudo mv /mnt/zram1/system.img /etc/waydroid-extra/images/
 sudo mv /mnt/zram1/vendor.img /etc/waydroid-extra/images/
 ```
 
-
-```bash
-sudo mv /home/red_sora/Downloads/system.img /etc/waydroid-extra/images/
-sudo mv /home/red_sora/Downloads/vendor.img/etc/waydroid-extra/images/
-```
 > [!NOTE]
 > This command assumes your downloaded files are in the `/mnt/zram1/` folder. If you saved them elsewhere, adjust the source path accordingly.
 

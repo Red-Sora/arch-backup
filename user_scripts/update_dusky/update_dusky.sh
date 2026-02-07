@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-#  ARCH LINUX UPDATE ORCHESTRATOR (v5.8 - Hardened & Optimized + Custom Paths)
+#  ARCH LINUX UPDATE ORCHESTRATOR (v5.9 - Hardened & Optimized + Custom Paths)
 #  Description: Manages dotfile/system updates while preserving user tweaks.
 #  Target:      Arch Linux / Hyprland / UWSM / Bash 5.0+
 #  Repo Type:   Git Bare Repository (--git-dir=~/dusky --work-tree=~)
@@ -48,6 +48,11 @@ declare -A CUSTOM_SCRIPT_PATHS=(
     # Then in UPDATE_SEQUENCE add: "S | warp_toggle.sh"
 
     ["warp_toggle.sh"]="user_scripts/networking/warp_toggle.sh"
+    ["waypaper_config_reset.sh"]="user_scripts/desktop_apps/waypaper_config_reset.sh"
+    ["fix_theme_dir.sh"]="user_scripts/misc_extra/fix_theme_dir.sh"
+    ["package_installation.sh"]="user_scripts/misc_extra/package_installation.sh"
+    ["copy_service_files.sh"]="user_scripts/misc_extra/copy_service_files.sh"
+    ["update_checker.sh"]="user_scripts/update_dusky/update_checker/update_checker.sh"
 )
 
 # Centralized timestamp (Separate declaration for SC2155 compliance)
@@ -208,7 +213,7 @@ declare -ra UPDATE_SEQUENCE=(
 #    "S | 035_powerkey_lid_close_behaviour.sh"
 #    "S | 036_logrotate_optimization.sh"
 #    "S | 037_faillock_timeout.sh"
-#    "U | 038_non_asus_laptop.sh --auto"
+    "U | 038_non_asus_laptop.sh --auto"
 #    "U | 039_file_manager_switch.sh"
 #    "U | 040_swaync_dgpu_fix.sh --disable"
 #    "S | 041_asusd_service_fix.sh"
@@ -246,7 +251,7 @@ declare -ra UPDATE_SEQUENCE=(
     "U | 073_desktop_apps_username_setter.sh --quiet"
 #    "U | 074_firefox_matugen_pywalfox.sh"
 #    "U | 075_spicetify_matugen_setup.sh"
-#    "U | 076_waybar_swap_config.sh"
+    "U | 076_waybar_swap_config.sh --toggle"
 #    "U | 077_mpv_setup.sh"
 #    "U | 078_kokoro_gpu_setup.sh"
 #    "U | 079_parakeet_gpu_setup.sh"
@@ -258,7 +263,18 @@ declare -ra UPDATE_SEQUENCE=(
     "U | 085_wayclick_reset.sh"
 #    "U | 086_generate_colorfiles_for_current_wallpaer.sh"
     "U | 087_hypr_custom_config_setup.sh"
+    "U | 088_hyprctl_reload.sh"
+    "U | 090_switch_clipboard.sh --terminal"
+#    "S | 091_sddm_setup.sh --auto"
+
+
+
     "U | warp_toggle.sh --disconnect"
+    "U | waypaper_config_reset.sh"
+    "U | fix_theme_dir.sh"
+    "U | copy_service_files.sh --default"
+    "U | update_checker.sh --num"
+    "S | package_installation.sh"
 )
 
 # ------------------------------------------------------------------------------
@@ -782,6 +798,22 @@ run_script() {
 main() {
     # Check dependencies first (before any logging)
     check_dependencies
+
+    # --------------------------------------------------------------------------
+    # USER INTERACTION SAFETY CHECK
+    # --------------------------------------------------------------------------
+    if [[ -t 0 ]]; then
+        printf '\n%s⚠️  WARNING: DO NOT INTERRUPT THE UPDATE WHILE ITS RUNNING! ⚠️%s\n' "${CLR_RED}" "${CLR_RST}"
+        printf 'Interrupting the process causes Git locks and inconsistent states.\n'
+        printf 'Please allow the update to complete fully before closing.\n\n'
+        
+        local start_confirm
+        read -r -p "Do you understand and wish to start the update? [y/N] " start_confirm
+        if [[ ! "$start_confirm" =~ ^[Yy]$ ]]; then
+            printf 'Update cancelled. You can run it later.\n'
+            exit 0
+        fi
+    fi
 
     setup_logging
 
